@@ -1,20 +1,22 @@
 <MyRoot>:
 
-    random_label: random_label
+    inputImage: inputImage
 
     BoxLayout:
         orientation: "vertical"
+
         Label:
             text: "ImgSuite"
             font_size: 64
             color: 0.0078, 0.6, 0.34
-        Label:
-            id: random_label 
-            text: "-"
-            font_size: 64
+
+        Image:
+            id: inputImage
+            source: ""
+            size: self.texture_size
 
         Button:
-            text: "Generate"
+            text: "Load"
             font_size: 32
             size: 100, 50
-            on_press: root.generate_number()
+            on_press: root.loadImage()
