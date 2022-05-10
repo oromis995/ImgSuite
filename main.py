@@ -17,7 +17,6 @@ from kivymd.toast import toast
 from kivy.core.window import Window
 from sympy import content
 from kivy.core.image import Image as CoreImage
-import histEqualization
 import segmentation
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
@@ -26,6 +25,8 @@ from kivy.graphics import Color
 from kivy.graphics import Point
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
+from PIL import Image
+from ComputerVisionAlgorithms import ComputerVisionAlgorithms
 
 kivy.require('2.1.0')
 
@@ -68,6 +69,9 @@ class MyRoot(MDScreen):
         '''
 
         self.exit_manager()
+        ComputerVisionAlgorithms.histogram_equalization(
+            Image.open(path), 100, 500, 100, 500).show()
+        path = "equalizedImage.png"
         self.inputImage.source = path
         self.image = CoreImage(path)
         self.imageHeight = self.image.height
