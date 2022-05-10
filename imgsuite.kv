@@ -1,27 +1,67 @@
 #: import md_icons kivymd.icon_definitions.md_icons
 #: import get_color_from_hex kivy.utils.get_color_from_hex
 <MyRoot>:
+
     inputImage: inputImage
+    nav_drawer: nav_drawer
+    imgHeightLabel: imgHeightLabel
+    imgWidthLabel: imgWidthLabel
 
-    MDScreen:
-        md_bg_color: get_color_from_hex("#000000")
-        MDBoxLayout:
-            orientation:"vertical"
-            
-            MDToolbar:
-                left_action_items: [["menu", lambda x: x]]
-                title: "Image Suite"
-                halign: "center"
+    MDNavigationLayout:
+
+        ScreenManager:
+            MDScreen:
                 md_bg_color: get_color_from_hex("#000000")
-                specific_text_color: app.theme_cls.primary_color
 
-            FitImage:
-                id: inputImage
+                
 
-            MDRectangleFlatButton:
-                text: "Load Image"
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                on_press: root.file_manager_open()
-                #on_press: root.loadImage()
-                icon_color: app.theme_cls.primary_color
+
+                MDBoxLayout:
+                    orientation:"vertical"
+                    
+                    MDToolbar:
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                        title: "Image Suite"
+                        halign: "center"
+                        md_bg_color: get_color_from_hex("#000000")
+                        specific_text_color: app.theme_cls.primary_color
+
+                        
+                    Image:
+                        id: inputImage
+                        source: "Intro.png"
+                    #Widget:
+                        #id: image_canvas
+                        #size_hint: (0.0000001, 0.0000001)
+                        #canvas:
+                            #Rectangle:
+                                #id: root.rect_box
+                                #pos: (root.x1, root.y1)
+                                #size: (root.t_x, root.t_y)
+
+                    MDRectangleFlatButton:
+                        text: "Load Image"
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        on_press: root.file_manager_open()
+                        icon_color: app.theme_cls.primary_color
+
+        MDNavigationDrawer:
+
+            id: nav_drawer
+            md_bg_color: get_color_from_hex("1f1f1f")
+
+            ContentNavigationDrawer:
+
+                Label:
+                    id: imgHeightLabel
+                    halign: "center"
+                    valign: "top"
+                    text: ""
+                    
+                Label:
+                    id: imgWidthLabel
+                    halign: "center"
+                    valign: "top"
+                    text: ""
+                    
                 
