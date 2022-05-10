@@ -17,7 +17,7 @@ class MyRoot(BoxLayout):
         super(MyRoot, self).__init__()
 
     def loadImage(self):
-        self.inputImage.source = "https://zunews.com/wp-content/uploads/2021/04/Screen-Shot-2021-04-01-at-1.48.27-PM.png"
+        self.inputImage.source = "451442263ad6573186beb1272cfadfc6.jpg"
 
 
 class ImgSuite(App):
