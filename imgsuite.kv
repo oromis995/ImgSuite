@@ -1,22 +1,27 @@
+#: import md_icons kivymd.icon_definitions.md_icons
+#: import get_color_from_hex kivy.utils.get_color_from_hex
 <MyRoot>:
-
     inputImage: inputImage
 
-    BoxLayout:
-        orientation: "vertical"
+    MDScreen:
+        md_bg_color: get_color_from_hex("#000000")
+        MDBoxLayout:
+            orientation:"vertical"
+            
+            MDToolbar:
+                left_action_items: [["menu", lambda x: x]]
+                title: "Image Suite"
+                halign: "center"
+                md_bg_color: get_color_from_hex("#000000")
+                specific_text_color: app.theme_cls.primary_color
 
-        Label:
-            text: "ImgSuite"
-            font_size: 64
-            color: 0.0078, 0.6, 0.34
+            FitImage:
+                id: inputImage
 
-        Image:
-            id: inputImage
-            source: ""
-            size: self.texture_size
-
-        Button:
-            text: "Load"
-            font_size: 32
-            size: 100, 50
-            on_press: root.loadImage()
+            MDRectangleFlatButton:
+                text: "Load Image"
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_press: root.file_manager_open()
+                #on_press: root.loadImage()
+                icon_color: app.theme_cls.primary_color
+                
