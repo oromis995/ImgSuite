@@ -3,6 +3,7 @@
 # uses BUILDOZER to build apk, requires Linux
 # https://stackoverflow.com/questions/51913956/kivy-user-touch-and-drag-for-cropping-function
 
+import time
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -54,11 +55,22 @@ class MyRoot(MDScreen):
         )
 
     def loadImage(self, path):
-        self.inputImage.source = path
+        self.path = path
+        self.imageViewer.source = path
+        self.image = CoreImage(path)
+        self.imageHeight = self.image.height
+        self.imageWidth = self.image.width
+        self.imgHeightLabel.text = ("Image Height: " + str(self.imageHeight))
+        self.imgWidthLabel.text = ("Image Width: " + str(self.imageWidth))
 
     def file_manager_open(self):
         self.file_manager.show('/')  # output manager to the screen
         self.manager_open = True
+
+    def equalizeImage(self):
+        ComputerVisionAlgorithms.histogram_equalization(
+            self.path, 100, 500, 100, 500)
+        self.loadImage("equalizedImage.png")
 
     def select_path(self, path):
         '''It will be called when you click on the file name
@@ -69,15 +81,7 @@ class MyRoot(MDScreen):
         '''
 
         self.exit_manager()
-        ComputerVisionAlgorithms.histogram_equalization(
-            Image.open(path), 100, 500, 100, 500).show()
-        path = "equalizedImage.png"
-        self.inputImage.source = path
-        self.image = CoreImage(path)
-        self.imageHeight = self.image.height
-        self.imageWidth = self.image.width
-        self.imgHeightLabel.text = ("Image Height: " + str(self.imageHeight))
-        self.imgWidthLabel.text = ("Image Width: " + str(self.imageWidth))
+        self.loadImage(path)
         toast(path)
 
     def exit_manager(self, *args):

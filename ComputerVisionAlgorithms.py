@@ -1,3 +1,4 @@
+from matplotlib.pyplot import new_figure_manager
 import numpy as np
 import cv2
 from numpy import asarray
@@ -8,18 +9,19 @@ from PIL import Image
 
 class ComputerVisionAlgorithms():
 
-    def histogram_equalization(original_img, x1, x2, y1, y2):
-        original_img = asarray(original_img)
+    def histogram_equalization(path, x1, x2, y1, y2):
+        image = Image.open(path)
+        original_numpy_array = asarray(image)
         # crop image in order to equalize only the histogram of the needed part,
-        img_in = original_img[x1:x2, y1:y2]
+        img_in = original_numpy_array[x1:x2, y1:y2]
         # segregate color streams
         try:
             b, g, r, alpha = cv2.split(img_in)
-            fourChan = True
+            quadChannel = True
 
         except:
             b, g, r = cv2.split(img_in)
-            fourChan = False
+            quadChannel = False
 
         h_b, bin_b = np.histogram(b.flatten(), 256, [0, 256])
         h_g, bin_g = np.histogram(g.flatten(), 256, [0, 256])
@@ -45,7 +47,7 @@ class ComputerVisionAlgorithms():
         img_b = cdf_final_b[b]
         img_g = cdf_final_g[g]
         img_r = cdf_final_r[r]
-        if fourChan == True:
+        if quadChannel == True:
             img_out = cv2.merge((img_b, img_g, img_r, alpha))
         else:
             img_out = cv2.merge((img_b, img_g, img_r))
@@ -54,13 +56,12 @@ class ComputerVisionAlgorithms():
         equ_b = cv2.equalizeHist(b)
         equ_g = cv2.equalizeHist(g)
         equ_r = cv2.equalizeHist(r)
-        if fourChan == True:
+        if quadChannel == True:
             equ = cv2.merge((img_b, img_g, img_r, alpha))
         else:
             equ = cv2.merge((img_b, img_g, img_r))
 
-        original_img[x1:x2, y1:y2] = equ
-        # print(equ)
-        cv2.imwrite('equalizedImage.png', original_img)
-        original_img = Image.fromarray(original_img)
-        return original_img
+        original_numpy_array[x1:x2, y1:y2] = equ
+        newImage = Image.fromarray(original_numpy_array)
+        newImage.save('equalizedImage.png')
+        return newImage

@@ -2,7 +2,7 @@
 #: import get_color_from_hex kivy.utils.get_color_from_hex
 <MyRoot>:
 
-    inputImage: inputImage
+    imageViewer: imageViewer
     nav_drawer: nav_drawer
     imgHeightLabel: imgHeightLabel
     imgWidthLabel: imgWidthLabel
@@ -28,8 +28,10 @@
 
                         
                     Image:
-                        id: inputImage
+                        id: imageViewer
                         source: "Intro.png"
+                        #No cache is very important or the whole application doesn't work.
+                        nocache: True
                     #Widget:
                         #id: image_canvas
                         #size_hint: (0.0000001, 0.0000001)
@@ -51,21 +53,37 @@
             md_bg_color: get_color_from_hex("1f1f1f")
 
             ContentNavigationDrawer:
+                orientation: "vertical"
+                padding: "8dp"
+                spacing: "8dp"
 
-                Label:
-                    id: imgHeightLabel
-                    halign: "center"
-                    valign: "top"
-                    text: ""
-                    
-                Label:
-                    id: imgWidthLabel
-                    halign: "center"
-                    valign: "top"
-                    text: ""
-                #MDRectangleFlatButton:
-                #        text: "Equalize Histogram"
-                #        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                #        on_press: root.file_manager_open()
-                #        icon_color: app.theme_cls.primary_color
-                
+                MDBoxLayout:
+                    orientation:"vertical"
+                    MDBoxLayout:
+                        orientation:"horizontal"
+                        Label:
+                            id: imgHeightLabel
+                            font_style: "Caption"
+                            size_hint_y: None
+                            #height: self.texture_size[1]
+                            
+                        Label:
+                            id: imgWidthLabel
+                            font_style: "Caption"
+                            size_hint_y: None
+                            #height: self.texture_size[1]
+                    MDBoxLayout:
+                        orientation:"horizontal"
+
+                        Label:
+                            id: lblEqualizeHist
+                            text: "Equalize Histogram"
+
+                        MDIconButton:
+                            user_font_size: "64sp"
+                            icon: "chart-histogram"
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            on_press: root.equalizeImage()
+                            theme_text_color: "Custom"
+                            text_color: get_color_from_hex("#FFFFFF")
+                      
