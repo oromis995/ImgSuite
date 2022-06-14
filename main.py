@@ -10,7 +10,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 import kivy
 from kivy.uix.screenmanager import Screen
 from kivy.uix.filechooser import FileChooserListView
-from kivymd.uix.button import MDRectangleFlatButton
+
 from kivymd import images_path
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.filemanager import MDFileManager
@@ -69,7 +69,7 @@ class MyRoot(MDScreen):
 
     def equalizeImage(self):
         ComputerVisionAlgorithms.histogram_equalization(
-            self.path, 100, 500, 100, 500)
+            self.path, 0, self.imageHeight, 0, self.imageWidth)
         self.loadImage("equalizedImage.png")
 
     def select_path(self, path):

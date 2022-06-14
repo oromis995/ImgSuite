@@ -40,12 +40,49 @@
                                 #id: root.rect_box
                                 #pos: (root.x1, root.y1)
                                 #size: (root.t_x, root.t_y)
+                    MDBoxLayout:
+                        orientation:"horizontal"
 
-                    MDRectangleFlatButton:
-                        text: "Load Image"
-                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                        on_press: root.file_manager_open()
-                        icon_color: app.theme_cls.primary_color
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [20,20,20,20]
+
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "application-import"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                on_press: root.file_manager_open()
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#FFFFFF")
+
+                            Label:
+                                id: lblImport
+                                text: "Import Image"
+                                valign: "top"
+                        
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [20,20,20,20]
+
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "chart-histogram"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                on_press: root.equalizeImage()
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#FFFFFF")
+
+                            Label:
+                                id: lblEqualizeHist
+                                text: "Equalize Histogram"
+                                valign: "top"
+
+                            
+
+                        
+                        
 
         MDNavigationDrawer:
 
@@ -72,18 +109,4 @@
                             font_style: "Caption"
                             size_hint_y: None
                             #height: self.texture_size[1]
-                    MDBoxLayout:
-                        orientation:"horizontal"
-
-                        Label:
-                            id: lblEqualizeHist
-                            text: "Equalize Histogram"
-
-                        MDIconButton:
-                            user_font_size: "64sp"
-                            icon: "chart-histogram"
-                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                            on_press: root.equalizeImage()
-                            theme_text_color: "Custom"
-                            text_color: get_color_from_hex("#FFFFFF")
-                      
+                 

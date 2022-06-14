@@ -12,6 +12,7 @@
 # please give the file selector enough time to run, it's a bit slow
 
 # 2-dimensional Convolution Function
+
 import time
 from skimage.color import rgb2gray
 import matplotlib.pyplot as plt
@@ -96,7 +97,7 @@ class Convolution():
             title='Open an Image', initialdir='/', filetypes=[('image files', ('.png', '.jpg'))])
         return(filename)
 
-    def main():
+    def main(self):
         # create the root window
         root = tk.Tk()
         time.sleep(1)
@@ -120,15 +121,16 @@ class Convolution():
         plt.imshow(img_gray, cmap='gray')
         plt.title('Input Image')
 
-        img_avg_filtered = customConvolve(img_gray, avg_kernel, padding)
+        img_avg_filtered = self.customConvolve(
+            img_gray, self.avg_kernel, self.padding)
         #img_avg_filtered = convolve(img_gray, avg_kernel)
 
         plt.figure(2)
         plt.imshow(img_avg_filtered, cmap='gray')
         plt.title('Input Image filtered by Averaging Filter')
 
-        img_gaussian_filtered = customConvolve(
-            img_gray, gaussian_kernel, padding)
+        img_gaussian_filtered = self.customConvolve(
+            img_gray, self.gaussian_kernel, self.padding)
         #img_gaussian_filtered = convolve(img_gray, gaussian_kernel)
 
         plt.figure(3)
