@@ -1,7 +1,7 @@
 from matplotlib.pyplot import new_figure_manager
 import numpy as np
 import cv2
-from numpy import asarray
+from numpy import array
 from PIL import Image
 # SOURCES
 # https://towardsdatascience.com/histogram-equalization-a-simple-way-to-improve-the-contrast-of-your-image-bcd66596d815
@@ -11,7 +11,7 @@ class ComputerVisionAlgorithms():
 
     def histogram_equalization(path, x1, x2, y1, y2):
         image = Image.open(path)
-        original_numpy_array = asarray(image)
+        original_numpy_array = array(image)
         # crop image in order to equalize only the histogram of the needed part,
         img_in = original_numpy_array[x1:x2, y1:y2]
         # segregate color streams
@@ -61,7 +61,9 @@ class ComputerVisionAlgorithms():
         else:
             equ = cv2.merge((img_b, img_g, img_r))
 
-        original_numpy_array[x1:x2, y1:y2] = equ
+        
+
+        original_numpy_array[x1:x2, y1:y2] = equ.copy()
         newImage = Image.fromarray(original_numpy_array)
         newImage.save('equalizedImage.png')
         return newImage
