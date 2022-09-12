@@ -26,7 +26,47 @@
                         md_bg_color: get_color_from_hex("#000000")
                         specific_text_color: app.theme_cls.primary_color
 
+                    MDBoxLayout:
+                        orientation:"horizontal"
+
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [20,20,20,20]
+
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "undo"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                #on_press: root.file_manager_open()
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#FFFFFF")
+
+                            Label:
+                                id: lblUndo
+                                text: "Undo"
+                                valign: "center"
+                                
                         
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [20,20,20,20]
+
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "redo"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                #on_press: root.file_manager_open()
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#FFFFFF")
+
+                            Label:
+                                id: lblRedo
+                                text: "Redo"
+                                valign: "center"
+                                
+
                     Image:
                         id: imageViewer
                         source: "Intro.png"
@@ -78,11 +118,25 @@
                                 id: lblEqualizeHist
                                 text: "Equalize Histogram"
                                 valign: "top"
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [20,20,20,20]
 
-                            
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "gradient-vertical"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                on_press: root.thresholdImage()
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#FFFFFF")
 
-                        
-                        
+                            Label:
+                                id: lblThreshold
+                                text: "Threshold"
+                                valign: "top"  
+
+    
 
         MDNavigationDrawer:
 

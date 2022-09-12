@@ -4,10 +4,26 @@ import cv2
 from numpy import array
 from PIL import Image
 # SOURCES
+# Histogram Equalization
 # https://towardsdatascience.com/histogram-equalization-a-simple-way-to-improve-the-contrast-of-your-image-bcd66596d815
-
+# Adaptive Thresholding
+# https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html
 
 class ComputerVisionAlgorithms():
+
+    def adaptiveThresholding(path,type):
+        img = cv2.imread(path,0)
+        img = cv2.medianBlur(img,5)
+        if type == "Gaussian":
+            th = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
+                cv2.THRESH_BINARY,11,2)
+        elif type == "Mean":
+            th = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
+            cv2.THRESH_BINARY,11,2)
+        
+        newImage = Image.fromarray(th)
+        newImage.save("equalizedImage.png")
+        return newImage
 
     def histogram_equalization(path, x1, x2, y1, y2):
         image = Image.open(path)

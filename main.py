@@ -38,6 +38,7 @@ class MyRoot(MDScreen):
     image = CoreImage(path)
     imageHeight = image.height
     imageWidth = image.width
+    imageHistory = []
     # Canvas Variables
     #rect_box = ObjectProperty(None)
     #t_x = NumericProperty(0.0)
@@ -71,6 +72,11 @@ class MyRoot(MDScreen):
         ComputerVisionAlgorithms.histogram_equalization(
             self.path, 0, self.imageHeight, 0, self.imageWidth)
         self.loadImage("equalizedImage.png")
+
+    def thresholdImage(self):
+        ComputerVisionAlgorithms.adaptiveThresholding(self.path, "Gaussian")
+        self.loadImage("equalizedImage.png")
+
 
     def select_path(self, path):
         '''It will be called when you click on the file name
