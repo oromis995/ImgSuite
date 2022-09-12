@@ -11,13 +11,14 @@ from PIL import Image
 
 class ComputerVisionAlgorithms():
 
-    def adaptiveThresholding(path,type):
-        img = cv2.imread(path,0)
+    def adaptiveThresholding(inputPath, outputPath, algorithm):
+        #NEED TO CREATE OUTPUT FILE
+        img = cv2.imread(inputPath,0)
         img = cv2.medianBlur(img,5)
-        if type == "Gaussian":
+        if algorithm == "Gaussian":
             th = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
                 cv2.THRESH_BINARY,11,2)
-        elif type == "Mean":
+        elif algorithm == "Mean":
             th = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             cv2.THRESH_BINARY,11,2)
         
@@ -25,8 +26,8 @@ class ComputerVisionAlgorithms():
         newImage.save("equalizedImage.png")
         return newImage
 
-    def histogram_equalization(path, x1, x2, y1, y2):
-        image = Image.open(path)
+    def histogram_equalization(inputPath, outputPath, x1, x2, y1, y2):
+        image = Image.open(inputPath)
         original_numpy_array = array(image)
         # crop image in order to equalize only the histogram of the needed part,
         img_in = original_numpy_array[x1:x2, y1:y2]

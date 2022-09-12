@@ -4,6 +4,8 @@
 # https://stackoverflow.com/questions/51913956/kivy-user-touch-and-drag-for-cropping-function
 
 import time
+import shutil
+import os
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -38,7 +40,9 @@ class MyRoot(MDScreen):
     image = CoreImage(path)
     imageHeight = image.height
     imageWidth = image.width
-    imageHistory = []
+    imageExtension = ""
+    redoActions = []
+    undoActions = []
     # Canvas Variables
     #rect_box = ObjectProperty(None)
     #t_x = NumericProperty(0.0)
@@ -56,6 +60,9 @@ class MyRoot(MDScreen):
         )
 
     def loadImage(self, path):
+        #NEED TO MAKE STACK ACTIONS AND FILETYPE SAVING
+        #NEED TO MAKE PROJECT FILE FORMAT AND PROJECT OBJECT
+        self.undoActions.append(path)
         self.path = path
         self.imageViewer.source = path
         self.image = CoreImage(path)
@@ -87,6 +94,9 @@ class MyRoot(MDScreen):
         '''
 
         self.exit_manager()
+        originalFileExt = os.path.splitext(path)[1]
+        shutil.copy(path,"./History/"+str(len(self.undoActions)) + originalFileExt)
+
         self.loadImage(path)
         toast(path)
 
