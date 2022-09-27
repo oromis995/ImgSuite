@@ -20,7 +20,6 @@ from kivymd.toast import toast
 from kivy.core.window import Window
 from sympy import content
 from kivy.core.image import Image as CoreImage
-import segmentation
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.graphics import Rectangle
@@ -29,26 +28,20 @@ from kivy.graphics import Point
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from PIL import Image
-from ComputerVisionAlgorithms import ComputerVisionAlgorithms
+import modules.adaptiveThresholding as adThresh
+import modules.histogramEqualization as histEq
+from ImgSwtImage import ImgSwtImage
+from Project import Project
 
 kivy.require('2.1.0')
 
 
 class MyRoot(MDScreen):
 
-    path = "Intro.png"
-    image = CoreImage(path)
-    imageHeight = image.height
-    imageWidth = image.width
-    imageExtension = ""
-    redoActions = []
-    undoActions = []
-    # Canvas Variables
-    #rect_box = ObjectProperty(None)
-    #t_x = NumericProperty(0.0)
-    #t_y = NumericProperty(0.0)
-    #x1 = y1 = x2 = y2 = NumericProperty(0.0)
-
+    image = ImgSwtImage()
+    project = Project()
+    
+    
     def __init__(self):
         super(MyRoot, self).__init__()
         Window.bind(on_keyboard=self.events)
@@ -58,31 +51,27 @@ class MyRoot(MDScreen):
             select_path=self.select_path,
             preview=True,
         )
+        # Initializes the image which is temporary data
+        self.image = ImgSwtImage()
+        # Initializes the project data for use and later saving
+        self.project = Project()
 
-    def loadImage(self, path):
-        #NEED TO MAKE STACK ACTIONS AND FILETYPE SAVING
-        #NEED TO MAKE PROJECT FILE FORMAT AND PROJECT OBJECT
-        self.undoActions.append(path)
-        self.path = path
-        self.imageViewer.source = path
-        self.image = CoreImage(path)
-        self.imageHeight = self.image.height
-        self.imageWidth = self.image.width
-        self.imgHeightLabel.text = ("Image Height: " + str(self.imageHeight))
-        self.imgWidthLabel.text = ("Image Width: " + str(self.imageWidth))
+    
 
     def file_manager_open(self):
         self.file_manager.show('/')  # output manager to the screen
         self.manager_open = True
 
     def equalizeImage(self):
-        ComputerVisionAlgorithms.histogram_equalization(
-            self.path, 0, self.imageHeight, 0, self.imageWidth)
-        self.loadImage("equalizedImage.png")
+        newPath = self.project.getNewPath(self.image)
+        histEq.histogram_Equalization(
+            self.image.path,newPath, 0, self.image.imageHeight, 0, self.image.imageWidth)
+        self.image.loadImage(newPath, self, self.project)
 
     def thresholdImage(self):
-        ComputerVisionAlgorithms.adaptiveThresholding(self.path, "Gaussian")
-        self.loadImage("equalizedImage.png")
+        newPath = self.project.getNewPath(self.image)
+        adThresh.adaptive_Thresholding(self.image.path, newPath, "Gaussian")
+        self.image.loadImage(newPath, self, self.project)
 
 
     def select_path(self, path):
@@ -94,11 +83,11 @@ class MyRoot(MDScreen):
         '''
 
         self.exit_manager()
-        originalFileExt = os.path.splitext(path)[1]
-        shutil.copy(path,"./History/"+str(len(self.undoActions)) + originalFileExt)
-
-        self.loadImage(path)
-        toast(path)
+        self.image.path = path
+        newPath = self.project.getNewPath(self.image)
+        shutil.copy(path,newPath)
+        self.image.loadImage(newPath,self,self.project)
+        toast(self.image.path)
 
     def exit_manager(self, *args):
         '''Called when the user reaches the root of the directory tree.'''
@@ -114,45 +103,7 @@ class MyRoot(MDScreen):
                 self.file_manager.back()
         return True
 
-    # Canvas Functions
-    # def enable_cropping(self):
-    #    if(self.path != "Intro.png"):
-    #        print("\nRootScreen:")
-    #        print(self.ids.main_image.pos)
-    #        print(self.ids.main_image.size)
-    #       print("\tAbsolute size=", self.ids.main_image.norm_image_size)
-    #        print("\tAbsolute pos_x=", self.ids.main_image.center_x -
-    #             self.ids.main_image.norm_image_size[0] / 2.)
-    #        print("\tAbsolute pos_y=", self.ids.main_image.center_y -
-    #              self.ids.main_image.norm_image_size[1] / 2.)
-
-    # def on_touch_down(self, touch):
-        # checks whether on start screen
-    #    if(self.path != "Intro.png"):
-    #        self.x1 = touch.x
-    #        self.y1 = touch.y
-    #        self.t_x = touch.x
-    #        self.t_y = touch.y
-    #
-    #        touch.grab(self)
-    #        print(self.x1, self.y1)
-
-    # def on_touch_move(self, touch):
-    #    if touch.grab_current is self:
-    #        # not working
-    #        self.t_x = touch.x
-    #        self.t_y = touch.y
-
-    #        print(self.t_x, self.t_y)
-
-    # def on_touch_up(self, touch):
-
-    #    if touch.grab_current is self and self.path != "Intro.png":
-    #        # final position
-    #        self.x2 = touch.x
-    #        self.y2 = touch.y
-
-    #        print(self.x2, self.y2)
+    
 
 
 class ContentNavigationDrawer(MDBoxLayout):
@@ -167,9 +118,9 @@ class ImgSuite(MDApp):
 
     def build(self):
         self.theme_cls.primary_palette = "Green"
-
         screen = MyRoot()
         screen.nav_drawer.set_state("closed")
+
         return screen
 
 

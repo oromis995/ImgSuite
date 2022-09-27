@@ -130,5 +130,5 @@ for filename in os.listdir(directory):
             
             
 
-print("\n","Processed pictures: ",processedCounter)
+print("\n","Processed pictures: ", processedCounter)
 print("\n","Total pictures: ",totalPicsCounter)

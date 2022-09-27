@@ -1,12 +1,3 @@
-# Sorry for the late assignment!
-
-# computer 1 (windows): installed anaconda, could not find scikit image, installed scikit image, already installed
-# computer 2 (linux): same issue
-# computer 3 (windows): same issue, uninstalled everything, reinstalled only anaconda. Issue with Intel mk something library
-# computer 3: googled, need to reinstall intel mk, tried pip install, not found pip. Tried installing pip. Conda not found.
-# computer 3: installed path variables, upgraded anaconda, activated anaconda, reinstalled pip.
-# computer 3: tried running again, failed on skimage error. Uninstalled and reinstalled, success!
-
 # source: https://medium.com/analytics-vidhya/2d-convolution-using-python-numpy-43442ff5f381
 
 # please give the file selector enough time to run, it's a bit slow
