@@ -30,25 +30,27 @@
                         left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
                         title: "Image Suite"
                         halign: "center"
-                        md_bg_color: get_color_from_hex("#000000")
-                        specific_text_color: app.theme_cls.primary_color
+                        md_bg_color: get_color_from_hex("#31D98C")
+                        specific_text_color: get_color_from_hex("#000000")
 
                     MDBoxLayout:
                         #NEED TO GREY OUT BUTTONS AND ADD ACTIONS
                         orientation:"horizontal"
+                        padding: [20,20,20,20]
+                        size_hint_x: 0.25
 
                         MDBoxLayout:
                             orientation:"vertical"
                             adaptive_height: True
-                            padding: [20,20,20,20]
+                            padding: [2,2,2,2]
 
                             MDIconButton:
                                 user_font_size: "32sp"
                                 icon: "undo"
-                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                 #on_press: root.file_manager_open()
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                 theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#FFFFFF")
+                                text_color: get_color_from_hex("#31D98C")
 
                             Label:
                                 id: lblUndo
@@ -59,7 +61,7 @@
                         MDBoxLayout:
                             orientation:"vertical"
                             adaptive_height: True
-                            padding: [20,20,20,20]
+                            padding: [2,2,2,2]
 
                             MDIconButton:
                                 user_font_size: "32sp"
@@ -67,7 +69,7 @@
                                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                 #on_press: root.file_manager_open()
                                 theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#FFFFFF")
+                                text_color: get_color_from_hex("#31D98C")
 
                             Label:
                                 id: lblRedo
@@ -102,7 +104,7 @@
                                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                 on_press: root.file_manager_open()
                                 theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#FFFFFF")
+                                text_color: get_color_from_hex("#31D98C")
 
                             Label:
                                 id: lblImport
@@ -120,7 +122,7 @@
                                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                 on_press: root.equalizeImage()
                                 theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#FFFFFF")
+                                text_color: get_color_from_hex("#31D98C")
 
                             Label:
                                 id: lblEqualizeHist
@@ -137,7 +139,7 @@
                                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                 on_press: root.thresholdImage()
                                 theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#FFFFFF")
+                                text_color: get_color_from_hex("#31D98C")
 
                             Label:
                                 id: lblThreshold
