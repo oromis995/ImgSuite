@@ -40,7 +40,7 @@ from kivymd.uix.snackbar import Snackbar
 
 kivy.require('2.1.0')
 
-class MyLogin(MDScreen):
+class Login(MDScreen):
     pass
     #def build(self):
     #    self.window = GridLayout()
@@ -48,20 +48,20 @@ class MyLogin(MDScreen):
     #    self.window.add_widget(Image(source="IS_logo.png"))
     #    return self.window
 
-class MySignup(MDScreen):
+class Signup(MDScreen):
     pass
 
-class MyProjects(MDScreen):
+class Projects(MDScreen):
     pass
 
-class MyRoot(MDScreen):
+class Root(MDScreen):
 
     image = ImgSwtImage()
     project = Project()
     
     
     def __init__(self, **kwargs):
-        super(MyRoot, self).__init__(**kwargs)
+        super(Root, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.events)
         self.manager_open = False
         self.file_manager = MDFileManager(
@@ -139,7 +139,7 @@ class ImgSuite(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
-        screen = MyRoot()
+        screen = Root()
         screen.nav_drawer.set_state("closed")
 
         #menu stuff starts here (part 1)
@@ -164,10 +164,10 @@ class ImgSuite(MDApp):
         # self.theme_cls.material_style = "M3"
 
         sm = ScreenManager()
-        sm.add_widget(MyLogin(name="MyLogin"))
-        sm.add_widget(MySignup(name="MySignup"))
-        sm.add_widget(MyProjects(name="MyProjects"))
-        sm.add_widget(MyRoot(name="MyRoot"))
+        sm.add_widget(Login(name="Login"))
+        sm.add_widget(Signup(name="Signup"))
+        sm.add_widget(Projects(name="Projects"))
+        sm.add_widget(Root(name="Root"))
         return sm
 
 #part 2 of menu drop down is here
