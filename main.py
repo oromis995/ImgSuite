@@ -22,9 +22,9 @@ from sympy import content
 from kivy.core.image import Image as CoreImage
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
-from kivy.graphics import Rectangle
-from kivy.graphics import Color
-from kivy.graphics import Point
+#from kivy.graphics import Rectangle
+#from kivy.graphics import Color
+#from kivy.graphics import Point
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from PIL import Image
@@ -32,21 +32,24 @@ import modules.adaptiveThresholding as adThresh
 import modules.histogramEqualization as histEq
 from ImgSwtImage import ImgSwtImage
 from Project import Project
-from kivy.uix.gridlayout import GridLayout
+from MakeApiCall import MakeApiCall
+
 #kivy drop down menu new imports
 from kivy.metrics import dp
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.snackbar import Snackbar
 
+
 kivy.require('2.1.0')
 
 class Login(MDScreen):
-    pass
-    #def build(self):
-    #    self.window = GridLayout()
-    #    self.window.cols = 1
-    #    self.window.add_widget(Image(source="IS_logo.png"))
-    #    return self.window
+    def __init__(self, **kwargs):
+        super(Login, self).__init__(**kwargs)
+        parameters = {}
+        api = "https://imagesuiteapi.basili.bid/health_check"
+        response = MakeApiCall.get_user_data(self, api, parameters)
+        toast(str(response), duration = 10)
+
 
 class Signup(MDScreen):
     pass
