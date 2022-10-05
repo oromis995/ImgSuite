@@ -32,9 +32,27 @@ import modules.adaptiveThresholding as adThresh
 import modules.histogramEqualization as histEq
 from ImgSwtImage import ImgSwtImage
 from Project import Project
+from kivy.uix.gridlayout import GridLayout
+#kivy drop down menu new imports
+from kivy.metrics import dp
+from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.snackbar import Snackbar
 
 kivy.require('2.1.0')
 
+class MyLogin(MDScreen):
+    pass
+    #def build(self):
+    #    self.window = GridLayout()
+    #    self.window.cols = 1
+    #    self.window.add_widget(Image(source="IS_logo.png"))
+    #    return self.window
+
+class MySignup(MDScreen):
+    pass
+
+class MyProjects(MDScreen):
+    pass
 
 class MyRoot(MDScreen):
 
@@ -42,8 +60,8 @@ class MyRoot(MDScreen):
     project = Project()
     
     
-    def __init__(self):
-        super(MyRoot, self).__init__()
+    def __init__(self, **kwargs):
+        super(MyRoot, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.events)
         self.manager_open = False
         self.file_manager = MDFileManager(
@@ -51,6 +69,7 @@ class MyRoot(MDScreen):
             select_path=self.select_path,
             preview=True,
         )
+        
         # Initializes the image which is temporary data
         self.image = ImgSwtImage()
         # Initializes the project data for use and later saving
@@ -61,6 +80,7 @@ class MyRoot(MDScreen):
     def file_manager_open(self):
         self.file_manager.show('/')  # output manager to the screen
         self.manager_open = True
+        self.file_manager.background_color_selection_button="brown"
 
     def equalizeImage(self):
         newPath = self.project.getNewPath(self.image)
@@ -115,13 +135,49 @@ class MyScreenManager(ScreenManager):
 
 
 class ImgSuite(MDApp):
-
+        
     def build(self):
+        self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
         screen = MyRoot()
         screen.nav_drawer.set_state("closed")
 
-        return screen
+        #menu stuff starts here (part 1)
 
+        menu_items = [
+            {
+                "viewclass": "OneLineListItem",
+                "text": f"Item {i}",
+                "height": dp(56),
+                "on_release": lambda x=f"Option {i}": self.menu_callback(x),
+             } for i in range(5)
+        ]
+        self.menu = MDDropdownMenu(
+            items=menu_items,
+            width_mult=4,
+        ) 
 
-ImgSuite().run()
+        #close start of menu (part 2)        
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Green"
+
+        # self.theme_cls.material_style = "M3"
+
+        sm = ScreenManager()
+        sm.add_widget(MyLogin(name="MyLogin"))
+        sm.add_widget(MySignup(name="MySignup"))
+        sm.add_widget(MyProjects(name="MyProjects"))
+        sm.add_widget(MyRoot(name="MyRoot"))
+        return sm
+
+#part 2 of menu drop down is here
+    def callback(self,button):
+        self.menu.caller = button
+        self.menu.open()
+
+    def menu_callback(self, text_item):
+        self.menu.dismiss()
+        Snackbar(text=text_item).open()
+
+if __name__ == '__main__':
+    ImgSuite().run()

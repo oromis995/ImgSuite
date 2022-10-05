@@ -1,176 +1,334 @@
 #: import md_icons kivymd.icon_definitions.md_icons
 #: import get_color_from_hex kivy.utils.get_color_from_hex
+
+<MyLogin>:
+    md_bg_color: get_color_from_hex("#000000")
+
+    MDBoxLayout:
+        orientation:"vertical"
+        padding: [100,150,100,150]
+        spacing: 20
+
+        Image:
+            source: "IS_logo.png"
+            size: self.width, self.height
+
+        Label:
+            font_size:60
+            text: "Log-in"
+            color: get_color_from_hex("#FFFFFF")
+
+        MDTextField:
+            id: user
+            hint_text: "username"
+            icon_right: "account"
+            size_hint_x: None
+            width: 600
+            font_size: 40
+            pos_hint: {"center_x": 0.5}
+            color_mode: 'custom'
+            line_color_focus: get_color_from_hex("#31D98C")
+            theme_text_color: "Custom"
+            text_color: get_color_from_hex("#31D98C")
+
+        MDTextField:
+            id: pwd
+            hint_text: "password"
+            icon_right: "eye-off"
+            size_hint_x: None
+            width: 600
+            font_size: 40
+            pos_hint: {"center_x": 0.5}
+            password: True
+            color_mode: 'custom'
+            line_color_focus: get_color_from_hex("#31D98C")
+            theme_text_color: "Custom"
+            text_color: get_color_from_hex("#31D98C")
+
+        MDFlatButton:
+            text: "New here? Sign-up"
+            text_color: get_color_from_hex("#31D98C")
+            font_size: 30
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_press: 
+                root.manager.current = "MySignup"
+                
+
+        MDRectangleFlatButton:
+            text: "    Log in    "
+            font_size: 50
+            pos_hint: {"center_x": 0.5} 
+            on_release: 
+                root.manager.current = "MyRoot"
+            theme_text_color: "Custom"
+            md_bg_color: get_color_from_hex("#31D98C")
+            text_color: "white"
+            
+    
+<MySignup>:
+    md_bg_color: get_color_from_hex("#000000")
+
+    MDBoxLayout:
+        orientation:"vertical"
+        padding: [100,150,100,150]
+        spacing: 20
+
+        Image:
+            source: "IS_logo.png"
+            size: self.width, self.height
+        
+        Label:
+            font_size:60
+            text: "Sign-Up"
+            color: get_color_from_hex("#FFFFFF")
+
+        MDTextField:
+            id: user
+            hint_text: "username"
+            icon_right: "account"
+            size_hint_x: None
+            width: 600
+            font_size: 40
+            pos_hint: {"center_x": 0.5}
+            color_mode: 'custom'
+            line_color_focus: get_color_from_hex("#31D98C")
+
+        MDTextField:
+            id: pwd
+            hint_text: "password"
+            icon_right: "eye-off"
+            size_hint_x: None
+            width: 600
+            font_size: 40
+            pos_hint: {"center_x": 0.5}
+            password: True
+            color_mode: 'custom'
+            line_color_focus: get_color_from_hex("#31D98C")
+        
+        MDTextField:
+            id: pwdconf
+            hint_text: "confirm password"
+            icon_right: "eye-off"
+            
+            size_hint_x: None
+            width: 600
+            font_size: 40
+            pos_hint: {"center_x": 0.5}
+            password: True
+            color_mode: 'custom'
+            line_color_focus: get_color_from_hex("#31D98C")
+
+        MDRectangleFlatButton:
+            text: "    Sign up    "
+            font_size: 30
+            pos_hint: {"center_x": 0.5} 
+            on_press:
+                root.manager.current = "MyLogin"
+            md_bg_color: get_color_from_hex("#31D98C")
+            text_color: "white"
+
+
+                
+<MyProjects>:
+    md_bg_color: get_color_from_hex("#000000")
+
+    MDBoxLayout:
+        orientation: "vertical"
+        
+        
+        MDTopAppBar:
+            left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+            title: "Image Suite"
+            halign: "center"
+            md_bg_color: get_color_from_hex("#000000")
+            specific_text_color: app.theme_cls.primary_color
+
+        MDBoxLayout:
+            size_hint_x: None
+            width: 1920
+            size_hint_y: None
+            height:950 
+
+            md_bg_color: get_color_from_hex("#000000")
+
+            MDRaisedButton:
+                text: "Back"
+                font_size: 30
+                pos_hint: {"center_x": 0.5} 
+                on_press:
+                    root.manager.current = "MyLogin"
+
+            MDRaisedButton:
+                text: "Menu"
+                font_size: 30
+                pos_hint: {"center_x": 0.5} 
+                on_press:
+                    root.manager.current = "MyRoot"        
+
 <MyRoot>:
 
     imageViewer: imageViewer
     nav_drawer: nav_drawer
     imgHeightLabel: imgHeightLabel
     imgWidthLabel: imgWidthLabel
-
-    MDNavigationLayout:
-
-        ScreenManager:
-            
-            
-            
-            
-            
-            
-            
-            MDScreen:
-                md_bg_color: get_color_from_hex("#000000")
-
-                
-
-
-                MDBoxLayout:
-                    orientation:"vertical"
-                    
-                    MDTopAppBar:
-                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
-                        title: "Image Suite"
-                        halign: "center"
-                        md_bg_color: get_color_from_hex("#31D98C")
-                        specific_text_color: get_color_from_hex("#000000")
-
-                    MDBoxLayout:
-                        #NEED TO GREY OUT BUTTONS AND ADD ACTIONS
-                        orientation:"horizontal"
-                        padding: [20,20,20,20]
-                        size_hint_x: 0.25
-
-                        MDBoxLayout:
-                            orientation:"vertical"
-                            adaptive_height: True
-                            padding: [2,2,2,2]
-
-                            MDIconButton:
-                                user_font_size: "32sp"
-                                icon: "undo"
-                                #on_press: root.file_manager_open()
-                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                                theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#31D98C")
-
-                            Label:
-                                id: lblUndo
-                                text: "Undo"
-                                valign: "center"
-                                
-                        
-                        MDBoxLayout:
-                            orientation:"vertical"
-                            adaptive_height: True
-                            padding: [2,2,2,2]
-
-                            MDIconButton:
-                                user_font_size: "32sp"
-                                icon: "redo"
-                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                                #on_press: root.file_manager_open()
-                                theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#31D98C")
-
-                            Label:
-                                id: lblRedo
-                                text: "Redo"
-                                valign: "center"
-                                
-
-                    Image:
-                        id: imageViewer
-                        source: "Intro.png"
-                        #No cache is very important or the whole application doesn't work.
-                        nocache: True
-                    #Widget:
-                        #id: image_canvas
-                        #size_hint: (0.0000001, 0.0000001)
-                        #canvas:
-                            #Rectangle:
-                                #id: root.rect_box
-                                #pos: (root.x1, root.y1)
-                                #size: (root.t_x, root.t_y)
-                    MDBoxLayout:
-                        orientation:"horizontal"
-
-                        MDBoxLayout:
-                            orientation:"vertical"
-                            adaptive_height: True
-                            padding: [20,20,20,20]
-
-                            MDIconButton:
-                                user_font_size: "32sp"
-                                icon: "application-import"
-                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                                on_press: root.file_manager_open()
-                                theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#31D98C")
-
-                            Label:
-                                id: lblImport
-                                text: "Import Image"
-                                valign: "top"
-                        
-                        MDBoxLayout:
-                            orientation:"vertical"
-                            adaptive_height: True
-                            padding: [20,20,20,20]
-
-                            MDIconButton:
-                                user_font_size: "32sp"
-                                icon: "chart-histogram"
-                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                                on_press: root.equalizeImage()
-                                theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#31D98C")
-
-                            Label:
-                                id: lblEqualizeHist
-                                text: "Equalize Histogram"
-                                valign: "top"
-                        MDBoxLayout:
-                            orientation:"vertical"
-                            adaptive_height: True
-                            padding: [20,20,20,20]
-
-                            MDIconButton:
-                                user_font_size: "32sp"
-                                icon: "gradient-vertical"
-                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                                on_press: root.thresholdImage()
-                                theme_text_color: "Custom"
-                                text_color: get_color_from_hex("#31D98C")
-
-                            Label:
-                                id: lblThreshold
-                                text: "Threshold"
-                                valign: "top"  
-
     
+    
+    md_bg_color: get_color_from_hex("#000000")
 
-        MDNavigationDrawer:
+    MDNavigationDrawer:
+        id: nav_drawer
+        md_bg_color: get_color_from_hex("1f1f1f")
 
-            id: nav_drawer
-            md_bg_color: get_color_from_hex("1f1f1f")
+        ContentNavigationDrawer:
+            orientation: "vertical"
+            padding: "8dp"
+            spacing: "8dp"
 
-            ContentNavigationDrawer:
-                orientation: "vertical"
-                padding: "8dp"
-                spacing: "8dp"
+        MDBoxLayout:
+            orientation:"vertical"
 
-                MDBoxLayout:
-                    orientation:"vertical"
-                    MDBoxLayout:
-                        orientation:"horizontal"
-                        Label:
-                            id: imgHeightLabel
-                            font_style: "Caption"
-                            size_hint_y: None
-                            #height: self.texture_size[1]
-                            
-                        Label:
-                            id: imgWidthLabel
-                            font_style: "Caption"
-                            size_hint_y: None
-                            #height: self.texture_size[1]
-                 
+            MDBoxLayout:
+                orientation:"horizontal"
+                Label:
+                    id: imgHeightLabel
+                    font_style: "Caption"
+                    size_hint_y: None
+                    #height: self.texture_size[1]
+                    
+                Label:
+                    id: imgWidthLabel
+                    font_style: "Caption"
+                    size_hint_y: None
+                    #height: self.texture_size[1]
+        
+
+    MDBoxLayout:
+        orientation:"vertical"
+        
+        MDTopAppBar:
+            left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+            title: "Image Suite"
+            halign: "center"
+            md_bg_color: get_color_from_hex("#31D98C")
+            specific_text_color: get_color_from_hex("#000000")
+
+
+        MDBoxLayout:
+            #NEED TO GREY OUT BUTTONS AND ADD ACTIONS
+            orientation:"horizontal"
+            padding: [20,20,20,20]
+            size_hint_x: 0.25
+            spacing: 5
+
+            MDBoxLayout:
+                orientation:"vertical"
+                adaptive_height: True
+                padding: [2,2,2,2]
+
+                MDIconButton:
+                    user_font_size: "32sp"
+                    icon: "undo"
+                    #on_press: root.file_manager_open()
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    theme_text_color: "Custom"
+                    text_color: get_color_from_hex("#31D98C")
+
+                Label:
+                    id: lblUndo
+                    text: "Undo"
+                    valign: "center"
+                    
+            
+            MDBoxLayout:
+                orientation:"vertical"
+                adaptive_height: True
+                padding: [2,2,2,2]
+
+                MDIconButton:
+                    user_font_size: "32sp"
+                    icon: "redo"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    #on_press: root.file_manager_open()
+                    theme_text_color: "Custom"
+                    text_color: get_color_from_hex("#31D98C")
+                        
+                Label:
+                    id: lblRedo
+                    text: "Redo"
+                    valign: "center"
+                    
+
+        Image:
+            id: imageViewer
+            source: "Intro.png"
+            #No cache is very important or the whole application doesn't work.
+            nocache: True
+
+        #Widget:
+            #id: image_canvas
+            #size_hint: (0.0000001, 0.0000001)
+            #canvas:
+                #Rectangle:
+                    #id: root.rect_box
+                    #pos: (root.x1, root.y1)
+                    #size: (root.t_x, root.t_y)
+                    
+        MDBoxLayout:
+            orientation:"horizontal"
+
+            MDBoxLayout:
+                orientation:"vertical"
+                adaptive_height: True
+                padding: [20,20,20,20]
+
+                MDIconButton:
+                    user_font_size: "32sp"
+                    icon: "application-import"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_press: root.file_manager_open()
+                    theme_text_color: "Custom"
+                    text_color: get_color_from_hex("#31D98C")
+
+                Label:
+                    id: lblImport
+                    text: "Import Image"
+                    valign: "top"
+            
+            MDBoxLayout:
+                orientation:"vertical"
+                adaptive_height: True
+                padding: [20,20,20,20]
+
+                MDIconButton:
+                    user_font_size: "32sp"
+                    icon: "chart-histogram"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_press: root.equalizeImage()
+                    theme_text_color: "Custom"
+                    text_color: get_color_from_hex("#31D98C")
+
+                Label:
+                    id: lblEqualizeHist
+                    text: "Equalize Histogram"
+                    valign: "top"
+
+            MDBoxLayout:
+                orientation:"vertical"
+                adaptive_height: True
+                padding: [20,20,20,20]
+
+                MDIconButton:
+                    user_font_size: "32sp"
+                    icon: "gradient-vertical"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_press: root.thresholdImage()
+                    theme_text_color: "Custom"
+                    text_color: get_color_from_hex("#31D98C")
+
+                Label:
+                    id: lblThreshold
+                    text: "Threshold"
+                    valign: "top"  
+
+
+
