@@ -1,18 +1,27 @@
 import requests
 import json
+from requests.models import Response
 
 
 class MakeApiCall:
 
     def get_user_data(self, api, parameters):
-        response = requests.get(f"{api}", params=parameters)
+        try:
+            response = requests.get(f"{api}", params=parameters, timeout=5)
+        
+        except requests.exceptions.RequestException as e:
+            # Handles website unreachable
+            response = Response()
+            response.status_code = 408
+            response._content = "Timeout"
+
         if response.status_code == 200:
             print("sucessfully fetched the data with parameters provided")
             text = json.dumps(response.json(), sort_keys=True, indent=4)
             print(text)
         else:
             print(
-                f"Hello person, there's a {response.status_code} error with your request")
+                f"Failed to connect to basili.bid API, {response.status_code} error")
 
         return response.status_code
 
@@ -22,7 +31,7 @@ class MakeApiCall:
         # self.get_data(api)
 
         parameters = {
-            "username": "kedark"
+            "username": "myusername"
         }
         self.get_user_data(api, parameters)
 
