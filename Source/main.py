@@ -27,12 +27,12 @@ from sympy import content
 from kivy.core.image import Image as CoreImage
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
-#from kivy.graphics import Rectangle
-#from kivy.graphics import Color
-#from kivy.graphics import Point
+
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from PIL import Image
+
+# These are our internal modules which we wrote ourselves
 import modules.adaptiveThresholding as adThresh
 import modules.histogramEqualization as histEq
 from ImgSwtImage import ImgSwtImage
@@ -145,9 +145,13 @@ class MyScreenManager(ScreenManager):
 class ImgSuite(MDApp):
         
     def build(self):
+        # Decides what uneditable items will look like 
+        # such as the file chooser
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
         screen = Root()
+
+        # Sets the left hamburger menu to closed
         screen.nav_drawer.set_state("closed")
 
         #menu stuff starts here (part 1)
@@ -166,9 +170,6 @@ class ImgSuite(MDApp):
         ) 
 
         #close start of menu (part 2)        
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Green"
-
         # self.theme_cls.material_style = "M3"
 
         sm = ScreenManager()

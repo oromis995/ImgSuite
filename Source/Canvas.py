@@ -2,6 +2,9 @@
 # Debugging is hard and outside of current scope
 # Can be moved to UserInterface.py once there is time to implement
 
+#from kivy.graphics import Rectangle
+#from kivy.graphics import Color
+#from kivy.graphics import Point
 
 
 # Canvas Functions
