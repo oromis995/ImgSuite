@@ -3,9 +3,14 @@
 # uses BUILDOZER to build apk, requires Linux
 # https://stackoverflow.com/questions/51913956/kivy-user-touch-and-drag-for-cropping-function
 
+
+
 import time
 import shutil
 import os
+# This disables the touchpad as a touch screen.
+# May have unintended consequences.
+os.environ['KCFG_INPUT_%(NAME)S'] = ''
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
