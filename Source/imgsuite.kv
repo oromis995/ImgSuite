@@ -203,7 +203,7 @@
                             MDIconButton:
                                 user_font_size: "32sp"
                                 icon: "undo"
-                                #on_press: root.file_manager_open()
+                                on_press: root.project.undo(root)
                                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                 theme_text_color: "Custom"
                                 text_color: get_color_from_hex("#31D98C")
@@ -223,7 +223,7 @@
                                 user_font_size: "32sp"
                                 icon: "redo"
                                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                                #on_press: root.file_manager_open()
+                                on_press: root.project.redo(root)
                                 theme_text_color: "Custom"
                                 text_color: get_color_from_hex("#31D98C")
 

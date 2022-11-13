@@ -95,12 +95,13 @@ class Root(MDScreen):
         histEq.histogram_Equalization(
             self.image.path,newPath, 0, self.image.imageHeight, 0, self.image.imageWidth)
         self.image.loadImage(newPath, self, self.project)
+        self.project.emptyRedoStack()
 
     def thresholdImage(self):
         newPath = self.project.getNewPath(self.image)
         adThresh.adaptive_Thresholding(self.image.path, newPath, "Gaussian")
         self.image.loadImage(newPath, self, self.project)
-
+        self.project.emptyRedoStack()
 
     def select_path(self, path):
         '''It will be called when you click on the file name
@@ -115,6 +116,7 @@ class Root(MDScreen):
         newPath = self.project.getNewPath(self.image)
         shutil.copy(path,newPath)
         self.image.loadImage(newPath,self,self.project)
+        self.project.emptyRedoStack()
         toast(self.image.path)
 
     def exit_manager(self, *args):

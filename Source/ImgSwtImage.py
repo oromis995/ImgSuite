@@ -4,7 +4,7 @@ from kivy.core.image import Image as CoreImage
 
 class ImgSwtImage():
 
-    path = "Intro.png"
+    path = "./Source/Intro.png"
     image = CoreImage(path)
     imageHeight = image.height
     imageWidth = image.width
