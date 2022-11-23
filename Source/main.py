@@ -83,8 +83,6 @@ class Root(MDScreen):
         # Initializes the project data for use and later saving
         self.project = Project()
 
-    
-
     def file_manager_open(self):
         self.file_manager.show('/')  # output manager to the screen
         self.manager_open = True

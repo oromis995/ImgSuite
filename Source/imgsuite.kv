@@ -231,6 +231,24 @@
                                 id: lblRedo
                                 text: "Redo"
                                 valign: "center"
+
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [2,2,2,2]
+
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "content-save"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                on_press: root.project.saveDataToXML()
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#31D98C")
+
+                            Label:
+                                id: lblSave
+                                text: "Save"
+                                valign: "center"
                                 
 
                     Image:
@@ -238,6 +256,7 @@
                         source: "Intro.png"
                         #No cache is very important or the whole application doesn't work.
                         nocache: True
+
                     #Widget:
                         #id: image_canvas
                         #size_hint: (0.0000001, 0.0000001)
