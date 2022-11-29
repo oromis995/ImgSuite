@@ -189,6 +189,14 @@
                         md_bg_color: get_color_from_hex("#31D98C")
                         specific_text_color: get_color_from_hex("#000000")
 
+
+                    #MDFloatLayout:
+                    #
+                    #    MDFlatButton:
+                    #        text: "ALERT DIALOG"
+                    #        pos_hint: {'center_x': .5, 'center_y': .5}
+                    #        on_release: app.show_alert_dialog()
+
                     MDBoxLayout:
                         #NEED TO GREY OUT BUTTONS AND ADD ACTIONS
                         orientation:"horizontal"
@@ -241,7 +249,7 @@
                                 user_font_size: "32sp"
                                 icon: "content-save"
                                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                                on_press: root.project.saveDataToXML()
+                                on_press: root.saveProject()
                                 theme_text_color: "Custom"
                                 text_color: get_color_from_hex("#31D98C")
 
@@ -249,7 +257,43 @@
                                 id: lblSave
                                 text: "Save"
                                 valign: "center"
-                                
+                            
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [2,2,2,2]
+
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "new-box"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                on_press: root.makeNewProject()
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#31D98C")
+
+                            Label:
+                                id: lblNew
+                                text: "New"
+                                valign: "center"
+
+                        MDBoxLayout:
+                            orientation:"vertical"
+                            adaptive_height: True
+                            padding: [2,2,2,2]
+
+                            MDIconButton:
+                                user_font_size: "32sp"
+                                icon: "folder-move"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                on_press: root.importProject('defaultName.ip')
+                                theme_text_color: "Custom"
+                                text_color: get_color_from_hex("#31D98C")
+
+                            Label:
+                                id: lblImport
+                                text: "Import"
+                                valign: "center"
+
 
                     Image:
                         id: imageViewer
@@ -282,7 +326,7 @@
                                 text_color: get_color_from_hex("#31D98C")
 
                             Label:
-                                id: lblImport
+                                id: lblImportImage
                                 text: "Import Image"
                                 valign: "top"
                         

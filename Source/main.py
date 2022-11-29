@@ -12,20 +12,19 @@ import os
 # May have unintended consequences.
 os.environ['KCFG_INPUT_%(NAME)S'] = ''
 from kivy.lang import Builder
-from kivymd.app import MDApp
-from kivymd.uix.boxlayout import MDBoxLayout
 import kivy
+from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen
-from kivy.uix.filechooser import FileChooserListView
-
-from kivymd import images_path
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.boxlayout import MDBoxLayout
+
+from kivy.uix.filechooser import FileChooserListView
+from kivymd import images_path
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.toast import toast
 from kivy.core.window import Window
 from sympy import content
 from kivy.core.image import Image as CoreImage
-from kivy.lang import Builder
 from kivy.uix.widget import Widget
 
 from kivy.properties import NumericProperty, ObjectProperty
@@ -43,6 +42,9 @@ from MakeApiCall import MakeApiCall
 from kivy.metrics import dp
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.snackbar import Snackbar
+# Required for pop-up boxes
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
 
 
 kivy.require('2.1.0')
@@ -51,6 +53,8 @@ class Login(MDScreen):
     def __init__(self, **kwargs):
         super(Login, self).__init__(**kwargs)
         parameters = {}
+        # Api Endpoints can be included in an encrypted file
+        # Not within scope
         api = "https://imagesuiteapi.basili.bid/health_check"
         response = MakeApiCall.get_user_data(self, api, parameters)
         toast(str(response), duration = 10)
@@ -66,7 +70,6 @@ class Root(MDScreen):
 
     image = ImgSwtImage()
     project = Project()
-    
     
     def __init__(self, **kwargs):
         super(Root, self).__init__(**kwargs)
@@ -100,6 +103,29 @@ class Root(MDScreen):
         adThresh.adaptive_Thresholding(self.image.path, newPath, "Gaussian")
         self.image.loadImage(newPath, self, self.project)
         self.project.emptyRedoStack()
+
+
+    def importProject(self, fileName='defaultName.ip'):
+        self.project.importProject(fileName)
+        print(self.project.undoActions)
+        if len(self.project.undoActions) !=0:
+            self.image.loadImage(self.project.undoActions[len(self.project.undoActions)-1], self, self.project)
+        else: 
+            self.image.loadImage(self.image.defaultPath, self, self.project)
+        self.project.undoActions.pop()
+
+    def makeNewProject(self):
+        self.project.makeNewProject()
+        self.image.loadImage(self.image.defaultPath, self, self.project)
+        self.project.emptyUndoStack()
+
+    def saveProject(self):
+        result = self.project.saveProject()
+        goodResult = "File saved Successfully as" + self.project.finalPath
+        if result:
+            toast()
+        else:
+            toast("Failed to save project")
 
     def select_path(self, path):
         '''It will be called when you click on the file name
@@ -143,7 +169,8 @@ class MyScreenManager(ScreenManager):
 
 
 class ImgSuite(MDApp):
-        
+    dialog = None
+
     def build(self):
         # Decides what uneditable items will look like 
         # such as the file chooser
@@ -187,6 +214,29 @@ class ImgSuite(MDApp):
     def menu_callback(self, text_item):
         self.menu.dismiss()
         Snackbar(text=text_item).open()
+
+
+    def show_alert_dialog(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Overwrite Project?",
+                text="A Project with this name is already present.",
+                buttons=[
+                    MDFlatButton(
+                        text="NO",
+                        theme_text_color="Custom",
+                        text_color=self.theme_cls.primary_color,
+                        on_release=lambda _: self.dialog.dismiss(),
+                    ),
+                    MDFlatButton(
+                        text="YES",
+                        theme_text_color="Custom",
+                        text_color=self.theme_cls.primary_color,
+                        on_release=lambda _: self.dialog.dismiss(),
+                    ),
+                ],
+            )
+        self.dialog.open()
 
 if __name__ == '__main__':
     ImgSuite().run()

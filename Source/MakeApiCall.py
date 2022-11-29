@@ -7,7 +7,7 @@ class MakeApiCall:
 
     def get_user_data(self, api, parameters):
         try:
-            response = requests.get(f"{api}", params=parameters, timeout=5)
+            response = requests.get(f"{api}", params=parameters, timeout=2)
         
         except requests.exceptions.RequestException as e:
             # Handles website unreachable
